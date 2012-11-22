@@ -1,7 +1,9 @@
 TypeScript-Watcher
 ==================
 
-A file-watcher for TypeScript, providing common functionality currently missing in the tsc command
+A file-watcher for TypeScript, providing common functionality currently missing in the tsc command.  
+
+* Currently a work in progress *
 
 ## License
 The MIT license.
