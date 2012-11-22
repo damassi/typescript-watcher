@@ -5,11 +5,11 @@
  * @since 11.21.12
  */
 
+var Compiler = require('./compiler/TypeScriptCompiler');
 var chokidar = require('chokidar');
 var exec = require('child_process').exec;
 var sys = require('sys')
 var fs = require('fs');
-var compiler = require('./compiler/TypeScriptCompiler');
 var flags = require('optimist')
 
 	// Construct help menu
@@ -132,6 +132,26 @@ var TscWatch = (function(){
 		destroy();
 	}
 
+	function onCompilationComplete( err, js, fileName ) {
+		if( err ) {
+			console.log('Error compiling source: ', err );
+			return destroy();
+		}
+
+		var writePath = getFilePath( fileName ) + getFileName( fileName );
+		console.log( getFilePath( fileName ).split('/').splice(0) );
+
+		fs.writeFile( fileName, js, function(err) {
+		    if(err) {
+		        console.log(err);
+		        return destroy();
+		    } else {
+
+		       // console.log('Compiled: ', _outputPath, getJavaScriptFileName(fileName) );
+		    }
+		});
+	}
+
 	//--------------------------------------
 	//+ PRIVATE AND PROTECTED METHODS
 	//--------------------------------------
@@ -149,33 +169,14 @@ var TscWatch = (function(){
 		if( path.length ) {
 			if( options.msg )
 				console.log( 'File', path, options.msg );
-
-			console.log( path );
-			// use TS compiler 
+			
 			fs.readFile( path, 'utf8', function( err, data ) {
 				if( err ) {
 			    	return console.log( err );
 			  	}
 			  	
-			  	compiler.compile( data, path, onErrorHandler );
+			  	Compiler.compile( data, path, onCompilationComplete );
 			});
-
-			// // Execute TypeScript compiler command and log message.
-			// var cmd = 'tsc ' + path 
-			// 		   		 + ' --module ' + _moduleType 
-			// 		   		 + ' --out ' + _outputPath 
-			// 		   		 + "/" + getJavaScriptFileName( path );
-					   		 
-			// exec( cmd, function( error, stdout, stderr ) {
-			// 	if( stdout)
-			// 		console.log( stdout );
-			// 	else if( stderr )
-			// 		console.log( stderr );
-			// 	else if( error )
-			// 		console.log( err );
-			// 	else 
-			// 		console.log( 'Compiled: ' + path );
-			// });
 		}
 	}
 
@@ -201,8 +202,12 @@ var TscWatch = (function(){
 	 * @param  {String} path the full path
 	 * @return {String}      the file-name
 	 */
-	function getJavaScriptFileName( path ) {
-		return path.match(/[^\/]*$/)[0].replace('.ts', '.js');
+	function getFileName( path ) {
+		return path.match(/[^\/]*$/)[0];
+	}
+
+	function getFilePath( path ) {
+		return path.replace(/[^\/]*$/, "");
 	}
 
 	/**
