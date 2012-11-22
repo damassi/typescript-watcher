@@ -5,8 +5,9 @@
  * @since 11.21.12
  */
 
-var Compiler = require('./compiler/TypeScriptCompiler');
 var chokidar = require('chokidar');
+var compiler = require('./compiler/TypeScriptCompiler');
+var common = require('./lib/brunch/common');
 var exec = require('child_process').exec;
 var sys = require('sys')
 var fs = require('fs');
@@ -123,11 +124,12 @@ var TscWatch = (function(){
 		switch( err.code ) {
 			case 'ENOENT':
 				console.error('File or path not found: ', err.path );
+				destroy();
 				break;
 
 		}
 
-		console.log( 'ERROR: ', err );
+		console.log( 'Watch error: ', err );
 
 		destroy();
 	}
@@ -138,17 +140,16 @@ var TscWatch = (function(){
 			return destroy();
 		}
 
-		var writePath = getFilePath( fileName ) + getFileName( fileName );
-		console.log( getFilePath( fileName ).split('/').splice(0) );
+		var path = getFilePath(fileName).replace( _path, _outputPath );
+		var fullPath = path + getFileName( fileName );
+		
+		common.writeFile( fullPath, js, function(error, path, data){
+			if (error === null) {
+				console.log('Error writing file: ', error );
+				destroy();
+			}
 
-		fs.writeFile( fileName, js, function(err) {
-		    if(err) {
-		        console.log(err);
-		        return destroy();
-		    } else {
-
-		       // console.log('Compiled: ', _outputPath, getJavaScriptFileName(fileName) );
-		    }
+			console.log( 'Compliation complete: ', path );
 		});
 	}
 
@@ -175,7 +176,7 @@ var TscWatch = (function(){
 			    	return console.log( err );
 			  	}
 			  	
-			  	Compiler.compile( data, path, onCompilationComplete );
+			  	compiler.compile( data, path, onCompilationComplete );
 			});
 		}
 	}
@@ -206,6 +207,11 @@ var TscWatch = (function(){
 		return path.match(/[^\/]*$/)[0];
 	}
 
+	/**
+	 * Extracts the file-path from the path
+	 * @param  {String} path the full file-path
+	 * @return {String}      the file path
+	 */
 	function getFilePath( path ) {
 		return path.replace(/[^\/]*$/, "");
 	}
