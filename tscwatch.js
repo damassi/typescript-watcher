@@ -94,7 +94,7 @@ var TscWatch = (function(){
 	 * 
 	 */
 	function onAddHandler( path ) {
-		compileSource( filter( path )) //, { msg: ' has been added' });
+		compileSource( filter( path ), { msg: ' has been added' });
 	}
 
 	/**
@@ -103,8 +103,7 @@ var TscWatch = (function(){
 	 * 
 	 */
 	function onChangeHandler( path ) {
-		compileSource( filter( path )) //, { msg: ' has been added' });
-		//console.log('File', path, 'has been changed');
+		compileSource( filter( path ), { msg: ' has been changed' });
 	}
 
 	/**
