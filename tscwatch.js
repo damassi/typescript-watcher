@@ -8,6 +8,8 @@
 var chokidar = require('chokidar');
 var exec = require('child_process').exec;
 var sys = require('sys')
+var fs = require('fs');
+var compiler = require('./compiler/TypeScriptCompiler');
 var flags = require('optimist')
 
 	// Construct help menu
@@ -34,8 +36,6 @@ var flags = require('optimist')
     .default('m', 'AMD')
 
     .argv;
-
-
 
 var TscWatch = (function(){
 
@@ -148,22 +148,31 @@ var TscWatch = (function(){
 			if( options.msg )
 				console.log( 'File', path, options.msg );
 
-			// Execute TypeScript compiler command and log message.
-			var cmd = 'tsc ' + path 
-					   		 + ' --module ' + _moduleType 
-					   		 + ' --out ' + _outputPath 
-					   		 + "/" + getJavaScriptFileName( path );
-					   		 
-			exec( cmd, function( error, stdout, stderr ) {
-				if( stdout)
-					console.log( stdout );
-				else if( stderr )
-					console.log( stderr );
-				else if( error )
-					console.log( err );
-				else 
-					console.log( 'Compiled: ' + path );
+			// use TS compiler 
+			fs.readFile( path, 'utf8', function( err, data ) {
+				if( err ) {
+			    	return console.log( err );
+			  	}
+			  	
+			  	console.log( data );
 			});
+
+			// // Execute TypeScript compiler command and log message.
+			// var cmd = 'tsc ' + path 
+			// 		   		 + ' --module ' + _moduleType 
+			// 		   		 + ' --out ' + _outputPath 
+			// 		   		 + "/" + getJavaScriptFileName( path );
+					   		 
+			// exec( cmd, function( error, stdout, stderr ) {
+			// 	if( stdout)
+			// 		console.log( stdout );
+			// 	else if( stderr )
+			// 		console.log( stderr );
+			// 	else if( error )
+			// 		console.log( err );
+			// 	else 
+			// 		console.log( 'Compiled: ' + path );
+			// });
 		}
 	}
 
