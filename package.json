@@ -2,6 +2,7 @@
   "author": "Christopher Pappas",
   "name": "typescript-watcher",
   "description": "A file-watcher for TypeScript, providing common functionality currently missing in the tsc command",
+  "keywords": [ "typescript", "tsc", "watcher" ],
   "version": "0.0.1",
   "homepage": "https://github.com/damassi",
   "repository": {
@@ -16,7 +17,8 @@
     "chokidar": "0.4.0",
     "optimist": "0.3.5"
   },
+  "main": "./tscwatch.js",
   "bin" : { 
-    "tscwatch" : "lib/tscwatch.js" 
+    "tscwatch" : "bin/tscwatch.bin.js" 
   }
 }

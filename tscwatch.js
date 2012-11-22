@@ -120,8 +120,15 @@ var TscWatch = (function(){
 	 * Handler for generic watcher errors
 	 * @param  {[type]} path [description]
 	 */
-	function onErrorHandler( path ) {
-		console.error('Error happened', error);
+	function onErrorHandler( error ) {
+		switch( error.code ) {
+			case 'ENOENT':
+				console.error('File or path not found: ', error.path );
+				break;
+
+		}
+
+		destroy();
 	}
 
 	//--------------------------------------
@@ -222,7 +229,7 @@ var TscWatch = (function(){
 	 * @Constructor
 	 * Initializes the module
 	 */
-	(function() {
+	exports.init = function() {
 
 		// Base path
 		if( typeof flags.p !== 'undefined' ) 
@@ -243,5 +250,5 @@ var TscWatch = (function(){
 		_watcher = chokidar.watch( _path, { persistent: !_build });
 
 		addEventListeners();
-	})();
+	};
 })();
