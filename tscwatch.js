@@ -119,13 +119,15 @@ var TscWatch = (function(){
 	 * Handler for generic watcher errors
 	 * @param  {[type]} path [description]
 	 */
-	function onErrorHandler( error ) {
-		switch( error.code ) {
+	function onErrorHandler( err ) {
+		switch( err.code ) {
 			case 'ENOENT':
-				console.error('File or path not found: ', error.path );
+				console.error('File or path not found: ', err.path );
 				break;
 
 		}
+
+		console.log( 'ERROR: ', err );
 
 		destroy();
 	}
@@ -148,13 +150,14 @@ var TscWatch = (function(){
 			if( options.msg )
 				console.log( 'File', path, options.msg );
 
+			console.log( path );
 			// use TS compiler 
 			fs.readFile( path, 'utf8', function( err, data ) {
 				if( err ) {
 			    	return console.log( err );
 			  	}
 			  	
-			  	console.log( data );
+			  	compiler.compile( data, path, onErrorHandler );
 			});
 
 			// // Execute TypeScript compiler command and log message.
@@ -237,7 +240,7 @@ var TscWatch = (function(){
 	 * @Constructor
 	 * Initializes the module
 	 */
-	exports.init = function() {
+	exports.init = (function() {
 
 		// Base path
 		if( typeof flags.p !== 'undefined' ) 
@@ -258,5 +261,5 @@ var TscWatch = (function(){
 		_watcher = chokidar.watch( _path, { persistent: !_build });
 
 		addEventListeners();
-	};
+	})();
 })();
