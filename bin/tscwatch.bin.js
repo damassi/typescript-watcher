@@ -1,4 +1,4 @@
 #!/usr/bin/env node
-var tscwatch = require('../tscwatch');
+var tscwatch = require('../src/tscwatch');
 
 tscwatch.init();

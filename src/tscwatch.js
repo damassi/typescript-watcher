@@ -118,44 +118,50 @@ var TscWatch = (function(){
 
 	/**
 	 * Handler for generic watcher errors
-	 * @param  {[type]} path [description]
+	 * @param  {Object} err generic error object
 	 */
 	function onErrorHandler( err ) {
 		switch( err.code ) {
 			case 'ENOENT':
-				console.error('File or path not found: ', err.path );
-				destroy();
-				break;
-
+				destroy({ msg: 'File or path not found: ' + err.path  });
 		}
 
-		console.log( 'Watch error: ', err );
-
-		destroy();
+		destroy({ msg:  'Watch error: ' + err });
 	}
 
+	/**
+	 * Handler for compilation complete
+	 * @private
+	 */
 	function onCompilationComplete( err, js, fileName ) {
-		if( err ) {
-			console.log('Error compiling source: ', err );
-			return destroy();
-		}
-
-		var path = getFilePath(fileName).replace( _path, _outputPath );
-		var fullPath = path + getFileName( fileName );
-		
-		common.writeFile( fullPath, js, function(error, path, data){
-			if (error === null) {
-				console.log('Error writing file: ', error );
-				destroy();
-			}
-
-			console.log( 'Compliation complete: ', path );
-		});
+		outputSource( err, js, fileName );
 	}
 
 	//--------------------------------------
 	//+ PRIVATE AND PROTECTED METHODS
 	//--------------------------------------
+
+	/**
+	 * Outputs the source to a 
+	 * @param  {Object} err      generic error object
+	 * @param  {String} js       the compiled source
+	 * @param  {String} fileName the final output name
+	 */
+	function outputSource( err, js, fileName ) {
+		if( err )
+			return destroy({ msg: 'Error compiling source: ' + err });
+
+		var path = getFilePath(fileName).replace( _path, _outputPath );
+		var fullPath = path + getFileName( fileName );
+		
+		common.writeFile( fullPath, js, function(error, path, data){
+			if (error !== null) {
+				destroy({ msg: 'Error writing file: ' + error });
+			}
+
+			console.log( 'Compliation complete: ', path );
+		});
+	}
 
 	/**
 	 * Executes the `tsc` command and compiles source
@@ -176,14 +182,35 @@ var TscWatch = (function(){
 			    	return console.log( err );
 			  	}
 			  	
-			  	compiler.compile( data, path, onCompilationComplete );
+			  	compiler.compile( data, path, _moduleType, onCompilationComplete );
 			});
 		}
 	}
 
 	/**
+	 * Extracts the file-name from the path
+	 * @param  {String} path the full path
+	 * 
+	 * @return {String}      the file-name
+	 */
+	function getFileName( path ) {
+		return path.match(/[^\/]*$/)[0];
+	}
+
+	/**
+	 * Extracts the file-path from the path
+	 * @param  {String} path the full file-path
+	 * 
+	 * @return {String}      the file path
+	 */
+	function getFilePath( path ) {
+		return path.replace(/[^\/]*$/, "");
+	}
+
+	/**
 	 * Filters file-system files for only .ts related
 	 * @param  {String} path the file path
+	 * 
 	 * @return {String}      valid typescript file-paths
 	 */
 	function filter( path ) {
@@ -196,24 +223,6 @@ var TscWatch = (function(){
 		}
 
 		return '';
-	}
-
-	/**
-	 * Extracts the file-name from the path
-	 * @param  {String} path the full path
-	 * @return {String}      the file-name
-	 */
-	function getFileName( path ) {
-		return path.match(/[^\/]*$/)[0];
-	}
-
-	/**
-	 * Extracts the file-path from the path
-	 * @param  {String} path the full file-path
-	 * @return {String}      the file path
-	 */
-	function getFilePath( path ) {
-		return path.replace(/[^\/]*$/, "");
 	}
 
 	/**
@@ -242,8 +251,15 @@ var TscWatch = (function(){
 	 * Destroys the watcher and closes the process
 	 * 
 	 */
-	function destroy() {
-		if( _watcher ) _watcher.close();
+	function destroy( options ) {
+		options = options || {};
+
+		if( typeof options.msg !== 'undefined' )
+			console.log( options.msg );
+
+		if( _watcher ) 
+			_watcher.close();
+
 		process.exit();
 	}
 
@@ -251,7 +267,7 @@ var TscWatch = (function(){
 	 * @Constructor
 	 * Initializes the module
 	 */
-	exports.init = (function() {
+	exports.init = function() {
 
 		// Base path
 		if( typeof flags.p !== 'undefined' ) 
@@ -272,5 +288,5 @@ var TscWatch = (function(){
 		_watcher = chokidar.watch( _path, { persistent: !_build });
 
 		addEventListeners();
-	})();
+	};
 })();

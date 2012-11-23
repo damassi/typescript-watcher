@@ -27,6 +27,10 @@ var TypeScriptCompiler = (function() {
 	 */
 	var _settings = null;
 
+	/**
+	 * The complete fileName
+	 * @type {String}
+	 */
 	var _fileName = '';
 
 	/**
@@ -55,7 +59,7 @@ var TypeScriptCompiler = (function() {
 		 * @param  {String} path the path to the file
 		 * 
 		 */
-		compile: function( data, path, callback ) {
+		compile: function( data, path, moduleType, callback ) {
 			var compiler, env, error, js, output, resolver, units, _this = this;
 		    try {
 		      	js = "";
@@ -74,7 +78,7 @@ var TypeScriptCompiler = (function() {
 				env = new TypeScript.CompilationEnvironment(_settings, io);
 				resolver = new TypeScript.CodeResolver(env);
 				units = [{
-					fileName: sysPath.join(__dirname, "..", "node_modules", "typescript", "bin", "lib.d.ts")
+					fileName: sysPath.join(__dirname, "..", "..", "node_modules", "typescript", "bin", "lib.d.ts")
 				}];
 		      	path = TypeScript.switchToForwardSlashes(path);
 
