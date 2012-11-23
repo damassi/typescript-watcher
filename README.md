@@ -24,6 +24,11 @@ TODO
 ----
 - Write tests
 
+Thanks
+-------
+- Core TypeScript compilation code was extracted from Josh Heyse's *typescript-brunch* plugin:  https://github.com/joshheyse/typescript-brunch
+- Inspiration and various file-utilities came from Paul Miller's incredible application-assembler, *Brunch*: https://github.com/brunch
+
 ## License
 The MIT license.
 
