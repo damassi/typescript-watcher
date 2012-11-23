@@ -13,6 +13,10 @@ Options:
 
 *** Currently a work in progress ***
 
+TODO
+----
+- Write tests
+
 ## License
 The MIT license.
 
