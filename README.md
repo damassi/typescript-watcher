@@ -1,7 +1,7 @@
 TypeScript-Watcher
 ==================
 
-A Node.js file-watcher for TypeScript, providing common functionality currently missing in the tsc command, notably the inability to specify output paths for individual files and anonymous batch, multi-file compilations.  
+A Node.js file-watcher for TypeScript, providing common functionality currently missing in the tsc command, notably the inability to specify output paths for individual files and recursive, multi-file compilations.  
 
 Installation
 -------------
