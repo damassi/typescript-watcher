@@ -7,10 +7,10 @@
  * @since 11.22.12
  */
 
-var fs = require("fs");
-var sysPath = require("path");
-var io = require("./io");
-var TypeScript = require('typescript-wrapper');
+var fs			= require("fs");
+var sysPath		= require("path");
+var io			= require("./io");
+var TypeScript	= require('typescript-wrapper');
 
 var nulloutput = {
     Write: function(value) {},

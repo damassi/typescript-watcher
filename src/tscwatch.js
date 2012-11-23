@@ -1,17 +1,18 @@
 /**
- * A file-watcher for TypeScript, providing common functionality currently missing in the tsc command
+ * A file-watcher for TypeScript, providing common functionality currently 
+ * missing in the tsc command.
  * 
  * @author Christopher Pappas | github.com/damassi
  * @since 11.21.12
  */
 
-var chokidar = require('chokidar');
-var compiler = require('./compiler/TypeScriptCompiler');
-var common = require('./lib/brunch/common');
-var exec = require('child_process').exec;
-var sys = require('sys')
-var fs = require('fs');
-var flags = require('optimist')
+var chokidar	= require('chokidar');
+var compiler	= require('./compiler/TypeScriptCompiler');
+var common		= require('./lib/brunch/common');
+var exec		= require('child_process').exec;
+var sys			= require('sys')
+var fs			= require('fs');
+var flags		= require('optimist')
 
 	// Construct help menu
 	.usage('\nWatch your .ts files for changes and compile automatically.\nUsage: $0')
@@ -37,6 +38,7 @@ var flags = require('optimist')
     .default('m', 'AMD')
 
     .argv;
+
 
 var TscWatch = (function(){
 
@@ -129,13 +131,6 @@ var TscWatch = (function(){
 		destroy({ msg:  'Watch error: ' + err });
 	}
 
-	/**
-	 * Handler for compilation complete
-	 * @private
-	 */
-	function onCompilationComplete( err, js, fileName ) {
-		outputSource( err, js, fileName );
-	}
 
 	//--------------------------------------
 	//+ PRIVATE AND PROTECTED METHODS
@@ -155,7 +150,7 @@ var TscWatch = (function(){
 		var fullPath = path + getFileName( fileName );
 		
 		common.writeFile( fullPath, js, function(error, path, data){
-			if (error !== null) {
+			if( error !== null ) {
 				destroy({ msg: 'Error writing file: ' + error });
 			}
 
@@ -182,7 +177,7 @@ var TscWatch = (function(){
 			    	return console.log( err );
 			  	}
 			  	
-			  	compiler.compile( data, path, _moduleType, onCompilationComplete );
+			  	compiler.compile( data, path, _moduleType, outputSource );
 			});
 		}
 	}
@@ -217,7 +212,7 @@ var TscWatch = (function(){
 		// filter only typescript files
 		if( path.match(/^.*\.(ts)$/i)) {
 			// filter out interfaces and type definitions
-			if( !path.match( /\.d\.ts/ )) {
+			if( !path.substr(-5) !== '.d.ts') {
 				return path;
 			}
 		}
