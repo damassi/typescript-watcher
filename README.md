@@ -1,12 +1,12 @@
 TypeScript-Watcher
 ==================
 
-A Node.js file-watcher for TypeScript, providing common functionality currently missing in the tsc command.  
+A Node.js file-watcher for TypeScript, providing common functionality currently missing in the tsc command, notably the inability to specify output paths for individual files and anonymous batch, multi-file compilations.  
 
 Installation
 -------------
 - Run `sudo npm install -g typescript-watcher`
-- To start watching, type `tscwatch -p <path to .ts files> -o <output path for compiled .js>`
+- To start watching, type `tscwatch -p <path to .ts files> -o <output path for compiled .js files>`
 - If you wish to simply compile all .ts sources pass in `-b` flag.  
 - To specify module-type, pass in `-m <AMD or commonjs>`.  Default is AMD
 
