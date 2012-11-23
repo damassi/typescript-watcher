@@ -11,7 +11,6 @@ var fs = require("fs");
 var sysPath = require("path");
 var io = require("./io");
 var TypeScript = require('typescript-wrapper');
-TypeScript.moduleGenTarget = TypeScript.ModuleGenTarget.Synchronous;
 
 var nulloutput = {
     Write: function(value) {},
@@ -61,6 +60,13 @@ var TypeScriptCompiler = (function() {
 		 */
 		compile: function( data, path, moduleType, callback ) {
 			var compiler, env, error, js, output, resolver, units, _this = this;
+
+			( moduleType === 'AMD' ) ? 
+				moduleType = TypeScript.ModuleGenTarget.Asynchronous :
+				moduleType = TypeScript.ModuleGenTarget.Synchronous;
+
+			TypeScript.moduleGenTarget = moduleType;
+
 		    try {
 		      	js = "";
 		        output = {
