@@ -3,11 +3,13 @@ TypeScript-Watcher
 
 A file-watcher for TypeScript, providing common functionality currently missing in the tsc command.  
 
-```Options:
+```
+Options:
   -p, --path    The base path to your typescript source                     [required]
   -o, --output  The output path that you want your .ts files to compile to  [required]
   -b, --build   Compile the source and then exit                            [default: false]
-  -m, --module  The module type (AMD or commonjs).  Default is AMD          [default: "AMD"]```
+  -m, --module  The module type (AMD or commonjs).  Default is AMD          [default: "AMD"]
+```
 
 *** Currently a work in progress ***
 
