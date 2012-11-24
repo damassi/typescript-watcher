@@ -11,7 +11,7 @@ var exec		= require('child_process').exec;
 var sys			= require('sys')
 var fs			= require('fs');
 var compiler	= require('./../compiler/typescript-compiler');
-var common		= require('./brunch/common');
+var common		= require('./../lib/brunch/common');
 
 /**
  * Events hash

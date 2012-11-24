@@ -7,8 +7,9 @@
 
 var fs				= require( 'fs' );
 var sysPath			= require( 'path' );
-var tscSettings		= require( './../lib/tsc-settings' );
-var tscwatch		= require( './../lib/tscwatch');
+var tscSettings		= require( './../core/tsc-settings' );
+var tscwatch		= require( './../core/tscwatch');
+
 
 //--------------------------------------
 //+ PUBLIC INTERFACE
@@ -20,7 +21,7 @@ var tscwatch		= require( './../lib/tscwatch');
  * @param  {Function} callback callback function to execute on complete
  */
 exports.runConfig = function( options, callback ) {
-	var config = JSON.parse( fs.readFileSync( sysPath.join( __dirname, '..', '..', 'config.json' )));
+	var config = JSON.parse( fs.readFileSync( options.path ));
 	
 	tscwatch.init( tscSettings.parse( config ));
 }
