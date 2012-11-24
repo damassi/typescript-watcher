@@ -83,16 +83,9 @@ var _commandLineConfig = {
 			flag: true
 		},
 
-		"concat": {
-			abbr: 'cat',
-			help: 'compile all source files into a single .js file',
-			flag: true
-		},
-
-		"moduletype": {
+		"moduleType": {
 			abbr: 'm',
-			help: 'set the compiled source module type (commonjs or AMD).  Default is commonjs',
-			flag: true
+			help: 'set the compiled source module type (commonjs or AMD).  Default is commonjs'
 		},
 
 		"sourcemap": {
@@ -103,8 +96,7 @@ var _commandLineConfig = {
 
 		"target": {
 			abbr: 't',
-			help: 'output JavaScript version; options are "ES3" and "ES5".  Default is "ES3"',
-			flag: true
+			help: 'output JavaScript version; options are "ES3" and "ES5".  Default is "ES3"'
 		},
 
 		"version": {

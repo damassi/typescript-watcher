@@ -10,7 +10,6 @@ var sysPath			= require( 'path' );
 var tscSettings		= require( './../lib/tsc-settings' );
 var tscwatch		= require( './../lib/tscwatch');
 
-
 //--------------------------------------
 //+ PUBLIC INTERFACE
 //--------------------------------------
@@ -35,7 +34,8 @@ exports.build = function( options, callback ) {
 	var tscOptions = {
 		watch: false,
 		rootPath: options.rootPath,
-		outputPath: options.outputPath
+		outputPath: options.outputPath,
+		compilerOptions: tscSettings.returnBasicCompilerOptions( options )
 	}
 
 	tscwatch.init( tscSettings.parse( tscOptions ));
@@ -50,7 +50,8 @@ exports.watch = function( options, callback ) {
 	var tscOptions = {
 		watch: true,
 		rootPath: options.rootPath,
-		outputPath: options.outputPath
+		outputPath: options.outputPath,
+		compilerOptions: tscSettings.returnBasicCompilerOptions( options )
 	}
 
 	tscwatch.init( tscSettings.parse( tscOptions ));

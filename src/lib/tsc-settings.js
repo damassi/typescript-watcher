@@ -112,6 +112,20 @@ function _setDefaults() {
 //--------------------------------------
 
 /**
+ * Returns default compiler options
+ * @param  {[type]} options [description]
+ * @return {[type]}         [description]
+ */
+exports.returnBasicCompilerOptions = function( options ) {
+	return {
+		comments: options.comments || true,
+		moduleType: options.moduleType || 'commonjs',
+		sourcemap: options.sourcemap || false,
+		target: options.target || 'ES3'
+	}
+}
+
+/**
  * Parses suplied configuration parameters and returns a CompilationSettings object
  * @param  {Object} params a has of configuration options
  * 

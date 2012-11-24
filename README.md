@@ -54,8 +54,7 @@ To get help on individual command, execute 'tscwatch <command> --help' [options]
 
 Options:
   -c, --comments    output comments in the compiled source
-  -cat, --concat    compile all source files into a single .js file
-  -m, --moduletype  set the compiled source module type (commonjs or AMD).  Default is commonjs
+  -m, --moduleType  set the compiled source module type (commonjs or AMD).  Default is commonjs
   -s, --sourcemap   output sourcemaps alongside compiled source
   -t, --target      output JavaScript version; options are "ES3" and "ES5".  Default is "ES3"
   -v, --version     display tscwatch version
