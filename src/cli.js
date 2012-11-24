@@ -34,13 +34,6 @@ var _commandLineConfig = {
 					help: "the output path for compiled files",
 					metavar: "OUTPUT_PATH",
 					required: true
-				},
-
-				configPath: {
-					abbr: 'c',
-					help: 'path to config file',
-					metavar: 'CONFIG',
-					full: 'config'
 				}
 			},
 			callback: commands.build
@@ -62,16 +55,23 @@ var _commandLineConfig = {
 					help: "the output path for compiled files",
 					metavar: "OUTPUT_PATH",
 					required: true
-				},
-
-				configPath: {
-					abbr: 'c',
-					help: 'path to config file',
-					metavar: 'CONFIG',
-					full: 'config'
 				}
 			},
 			callback: commands.watch
+		},
+
+		"run-config": {
+			abbr: 'rc',
+			help: 'Load config file and run tscwatch based upon supplied params',
+			options: {
+				path: {
+					position: 1,
+					help: "the path to the configuration file",
+					metavar: "CONFIG_PATH",
+					required: true
+				}
+			},
+			callback: commands.runConfig
 		}
 	},
 
@@ -114,14 +114,6 @@ var _commandLineConfig = {
 	      callback: _returnPackageVersion,
 		},
 	}
-}
-
-/**
- * Loads a project wide config file to avoid command line parameters
- * 
- */
-function _returnJSONSettings() {
-	return JSON.parse( fs.readFileSync( sysPath.join( __dirname, '..', '..', 'config.json' )));
 }
 
 /**

@@ -5,12 +5,18 @@
  * @since 11.23.12
  */
 
-var tscwatch = require( './../lib/tscwatch');
-
+var fs			= require( 'fs' );
+var sysPath		= require( 'path' );
+var tscwatch	= require( './../lib/tscwatch');
 
 //--------------------------------------
 //+ PUBLIC INTERFACE
 //--------------------------------------
+
+exports.runConfig = function( options, callback ) {
+	var config = JSON.parse( fs.readFileSync( sysPath.join( __dirname, '..', '..', 'config.json' )));
+	console.log( config );
+}
 
 /**
  * Builds the project and then exits
