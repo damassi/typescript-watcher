@@ -7,37 +7,38 @@
  */
 
 var chokidar	= require('chokidar');
+var config 		= require('./config/WatchConfig');
 var compiler	= require('./compiler/TypeScriptCompiler');
 var common		= require('./lib/brunch/common');
 var exec		= require('child_process').exec;
 var sys			= require('sys')
 var fs			= require('fs');
-var flags		= require('optimist')
+// var flags		= require('optimist')
 
-	// Construct help menu
-	.usage('\nWatch your .ts files for changes and compile automatically.\nUsage: $0')
+// 	// Construct help menu
+// 	.usage('\nWatch your .ts files for changes and compile automatically.\nUsage: $0')
 
-	// Path
-    .demand('p')
-    .alias('p', 'path')
-    .describe('p', 'The base path to your typescript source')
+// 	// Path
+//     .demand('p')
+//     .alias('p', 'path')
+//     .describe('p', 'The base path to your typescript source')
     
-    // Output
-   	.demand('o')
-    .alias('o', 'output')
-    .describe('o', 'The output path that you want your .ts files to compile to')
+//     // Output
+//    	.demand('o')
+//     .alias('o', 'output')
+//     .describe('o', 'The output path that you want your .ts files to compile to')
     
-    // Single build
-    .alias('b', 'build')
-    .describe('b', 'Compile the source and then exit')
-    .default('b', false )
+//     // Single build
+//     .alias('b', 'build')
+//     .describe('b', 'Compile the source and then exit')
+//     .default('b', false )
     
-    //Module type
-    .alias('m', 'module')
-    .describe('m', 'The module type (AMD or commonjs).  Default is AMD')
-    .default('m', 'AMD')
+//     //Module type
+//     .alias('m', 'module')
+//     .describe('m', 'The module type (AMD or commonjs).  Default is AMD')
+//     .default('m', 'AMD')
 
-    .argv;
+//     .argv;
 
 
 var TscWatch = (function(){
@@ -177,7 +178,7 @@ var TscWatch = (function(){
 			    	return console.log( err );
 			  	}
 			  	
-			  	compiler.compile( data, path, _moduleType, outputSource );
+			  	compiler.compile( data, path, outputSource, _moduleType );
 			});
 		}
 	}
@@ -262,7 +263,10 @@ var TscWatch = (function(){
 	 * @Constructor
 	 * Initializes the module
 	 */
-	exports.init = function() {
+	exports.init = (function() {
+
+		config.run();
+		return;
 
 		// Base path
 		if( typeof flags.p !== 'undefined' ) 
@@ -283,5 +287,5 @@ var TscWatch = (function(){
 		_watcher = chokidar.watch( _path, { persistent: !_build });
 
 		addEventListeners();
-	};
+	})();
 })();

@@ -13,12 +13,13 @@
     "node": "node >=0.8.0"
   },
   "dependencies": {
-    "typescript": "0.8.0",
+    "argumentum": "0.6.0",
     "chokidar": "0.4.0",
-    "optimist": "0.3.5",
-    "typescript-wrapper": "0.8.0",
     "mkdirp": "0.3.4",
-    "ncp": "0.2.6"
+    "ncp": "0.2.6",
+    "optimist": "0.3.5",
+    "typescript": "0.8.0",
+    "typescript-wrapper": "0.8.0"
   },
   "main": "./tscwatch.js",
   "bin" : { 
