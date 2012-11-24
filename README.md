@@ -18,7 +18,7 @@ Usage
 3. Load Config: To load an external config .json file, execute 
   * `tscwatch run-config <path to config.json> [options]`
 
-** Configuration Options**
+**Configuration Options**
 
 ```
 {
