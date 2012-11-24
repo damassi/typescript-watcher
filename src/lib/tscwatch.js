@@ -238,25 +238,27 @@ function destroy( options ) {
  * Initializes the module
  * 
  */
-exports.init = function( flags ) {
+exports.init = function( tscSettings ) {
+
+	console.log( tscSettings )
 
 	// Base path
-	if( typeof flags.rootPath !== 'undefined' ) 
-		_path = flags.rootPath 
+	if( typeof tscSettings.rootPath !== 'undefined' ) 
+		_path = tscSettings.rootPath 
 
 	// Output path
-	if( typeof flags.outputPath !== 'undefined' ) 
-		_outputPath = flags.outputPath;
+	if( typeof tscSettings.outputPath !== 'undefined' ) 
+		_outputPath = tscSettings.outputPath;
 
 	// Do we just want to build?
-	if( typeof flags.build !== 'undefined' ) 
-		_build = flags.build;
+	if( typeof tscSettings.watch !== 'undefined' ) 
+		_watch = tscSettings.watch;
 
 	// Module type
-	if( typeof flags.moduleType !== 'undefined' )
-		_moduleType = flags.moduleType;
+	if( typeof tscSettings.moduleType !== 'undefined' )
+		_moduleType = tscSettings.compilerOptions.moduleType;
 
-	_watcher = chokidar.watch( _path, { persistent: !_build });
+	_watcher = chokidar.watch( _path, { persistent: _watch });
 
 	addEventListeners();
 };

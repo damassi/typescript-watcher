@@ -57,7 +57,7 @@ var _settingsMap = {
 		}, 
 
 		// TypeScript.ModuleGenTarget.Synchronous || Asynchronous
-		"moduletype": { 
+		"moduleType": { 
 			defaults: TypeScript.ModuleGenTarget.Synchronous, 
 			prop: _compilationSettings.moduleGenTarget,
 			options: {
@@ -144,5 +144,5 @@ exports.parse = function( params ) {
 		}
 	}
 
-	console.log( _settingsMap )
+	return _settingsMap;
 }

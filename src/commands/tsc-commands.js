@@ -22,7 +22,8 @@ var tscwatch		= require( './../lib/tscwatch');
  */
 exports.runConfig = function( options, callback ) {
 	var config = JSON.parse( fs.readFileSync( sysPath.join( __dirname, '..', '..', 'config.json' )));
-	tscSettings.parse( config );
+	
+	tscwatch.init( tscSettings.parse( config ));
 }
 
 /**
@@ -31,9 +32,13 @@ exports.runConfig = function( options, callback ) {
  * @param  {Function} callback callback function to execute on complete
  */
 exports.build = function( options, callback ) {
-	options.build = true;
+	var tscOptions = {
+		watch: false,
+		rootPath: options.rootPath,
+		outputPath: options.outputPath
+	}
 
-	tscwatch.init( options );
+	tscwatch.init( tscSettings.parse( tscOptions ));
 }
 
 /**
@@ -42,7 +47,11 @@ exports.build = function( options, callback ) {
  * @param  {Function} callback callback function to execute on complete
  */
 exports.watch = function( options, callback ) {
-	options.build = false;
+	var tscOptions = {
+		watch: true,
+		rootPath: options.rootPath,
+		outputPath: options.outputPath
+	}
 
-	tscwatch.init( options );
+	tscwatch.init( tscSettings.parse( tscOptions ));
 }

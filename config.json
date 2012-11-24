@@ -1,14 +1,14 @@
 {
 	"watch": true,
-	"rootPath": "root path",
-	"outputPath": "output path",
+	"rootPath": "tests/app",
+	"outputPath": "tests/public",
 	"compilerOptions": {
 		"comments"		: true, 
 		"concat"		: false, 
 		"debug"			: false, 
 		"declaration"	: false, 
 		"minw"			: false, 
-		"moduletype"	: "commonjs", 
+		"moduleType"	: "commonjs", 
 		"sourcemap"		: false, 
 		"style"			: "", 
 		"target"		: "ES3" 
