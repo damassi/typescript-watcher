@@ -1,7 +1,7 @@
 {
 	"watch": false,
 	"rootPath": "tests/app",
-	"outputPath": "tests/public",
+	"outputPath": "tests/public2",
 	"compilerOptions": {
 		"comments"		: true, 
 		"concat"		: false, 

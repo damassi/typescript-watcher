@@ -15,6 +15,30 @@ Usage
 	* `tscwatch build <rootPath> <outputPath> [options]`
 2. Watch: To continuously watch .ts files for changes and output compiled .js, execute 
 	* `tscwatch watch <rootPath> <outputPath> [options]`
+3. Load Config: To load an external config .json file, execute 
+  * `tscwatch run-config <path to config.json> [options]`
+
+** Configuration Options**
+
+```
+{
+  "watch": false,
+  "rootPath": "tests/app",
+  "outputPath": "tests/public2",
+  "compilerOptions": {
+    "comments"    : true, 
+    "debug"     : false, 
+    "declaration" : false, 
+    "minw"      : false, 
+    "moduleType"  : "AMD", 
+    "sourcemap"   : false, 
+    "target"    : "ES3" 
+  }
+}
+```
+
+
+
 
 **More options**
 
@@ -24,6 +48,7 @@ Usage: tscwatch [command] [options]
 Possible commands are:
   tscwatch build: Build TypeScript project (short-cut alias: 'b')
   tscwatch watch: Watch TypeScript project for changes and automatically compile (short-cut alias: 'w')
+  tscwatch run-config: Load config file and run tscwatch based upon supplied params (short-cut alias: 'rc')
 
 To get help on individual command, execute 'tscwatch <command> --help' [options]
 
