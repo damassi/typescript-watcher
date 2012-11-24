@@ -9,10 +9,16 @@ var fs			= require( 'fs' );
 var sysPath		= require( 'path' );
 var tscwatch	= require( './../lib/tscwatch');
 
+
 //--------------------------------------
 //+ PUBLIC INTERFACE
 //--------------------------------------
 
+/**
+ * Loads a configuration file and runs the watcher based upon suplied params
+ * @param  {Object}   options  an options hash consisting of params located in cli.js
+ * @param  {Function} callback callback function to execute on complete
+ */
 exports.runConfig = function( options, callback ) {
 	var config = JSON.parse( fs.readFileSync( sysPath.join( __dirname, '..', '..', 'config.json' )));
 	console.log( config );
