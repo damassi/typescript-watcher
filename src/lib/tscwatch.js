@@ -10,9 +10,8 @@ var chokidar	= require('chokidar');
 var exec		= require('child_process').exec;
 var sys			= require('sys')
 var fs			= require('fs');
-var cli 		= require('./cli');
-var compiler	= require('./compiler/typescript-compiler');
-var common		= require('./lib/brunch/common');
+var compiler	= require('./../compiler/typescript-compiler');
+var common		= require('./brunch/common');
 
 /**
  * Events hash
@@ -239,23 +238,23 @@ function destroy( options ) {
  * Initializes the module
  * 
  */
-exports.init = function() {
+exports.init = function( flags ) {
 
 	// Base path
-	if( typeof flags.p !== 'undefined' ) 
-		_path = flags.p 
+	if( typeof flags.rootPath !== 'undefined' ) 
+		_path = flags.rootPath 
 
 	// Output path
-	if( typeof flags.o !== 'undefined' ) 
-		_outputPath = flags.o;
+	if( typeof flags.outputPath !== 'undefined' ) 
+		_outputPath = flags.outputPath;
 
 	// Do we just want to build?
-	if( typeof flags.b !== 'undefined' ) 
-		_build = flags.b;
+	if( typeof flags.build !== 'undefined' ) 
+		_build = flags.build;
 
 	// Module type
-	if( typeof flags.m !== 'undefined' )
-		_moduleType = flags.m;
+	if( typeof flags.moduleType !== 'undefined' )
+		_moduleType = flags.moduleType;
 
 	_watcher = chokidar.watch( _path, { persistent: !_build });
 
