@@ -18,6 +18,7 @@ var _commandLineConfig = {
 	script: "tscwatch",
 	commandRequired: true,
 	commands: {
+		
 		"build": {
 			abbr: "b",
 			help: "Build TypeScript project",

@@ -5,13 +5,16 @@
   "keywords": [ "typescript", "tsc", "watcher" ],
   "version": "0.0.3",
   "homepage": "https://github.com/damassi",
+  
   "repository": {
     "type": "git",
     "url": "https://github.com/damassi/TypeScript-Watcher"
   },
+
   "engines": {
     "node": "node >=0.8.0"
   },
+
   "dependencies": {
     "argumentum": "0.6.0",
     "chokidar": "0.4.0",
@@ -19,6 +22,11 @@
     "ncp": "0.2.6",
     "typescript": "0.8.0",
     "typescript-wrapper": "0.8.0"
+  },
+
+  "devDependencies": {
+    "mocha": "*",
+    "assert": "*"
   },
 
   "bin" : { 
