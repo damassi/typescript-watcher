@@ -6,9 +6,15 @@ A Node.js file-watcher for TypeScript, providing common functionality currently 
 Installation
 -------------
 - Run `sudo npm install -g typescript-watcher`
-- To start watching, type `tscwatch -p <path to .ts files or folder> -o <output path for compiled .js files>`
-- If you wish to simply compile all .ts sources pass in `-b` flag.  
-- To specify module-type, pass in `-m <AMD or commonjs>`.  Default is AMD
+
+
+Usage
+-----
+
+- To simply build all .ts sources and ouput .js files into a location, execute `tscwatch build <rootPath> <outputPath> [options]`
+- To continuously watch for changes, execute `tscwatch watch <rootPath> <outputPath> [options]
+
+***More options***
 
 ```
 Usage: tscwatch [command] [options]
