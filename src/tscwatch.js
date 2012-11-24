@@ -13,7 +13,7 @@ var common		= require('./lib/brunch/common');
 var exec		= require('child_process').exec;
 var sys			= require('sys')
 var fs			= require('fs');
-// var flags		= require('optimist')
+// var flags		= require('optimist');
 
 // 	// Construct help menu
 // 	.usage('\nWatch your .ts files for changes and compile automatically.\nUsage: $0')
