@@ -5,10 +5,10 @@
  * @since 11.23.12
  */
 
-var argumentum = require( 'argumentum' );
-var fs = require( 'fs' );
-var sysPath = require( 'path' );
-var commands = require( '../commands/TscCommands' );
+var argumentum	= require( 'argumentum' );
+var fs			= require( 'fs' );
+var sysPath		= require( 'path' );
+var commands	= require( './commands/tsc-commands' );
 
 /**
  * Argumentum command line configuration
