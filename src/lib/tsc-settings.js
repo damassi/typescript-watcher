@@ -103,7 +103,7 @@ var _settingsMap = {
  */
 exports.parse = function( params ) {
 
-	// Loop through tsc-watcher options
+	// Loop through tsc-watcher options and / or config file
 	for( var prop in params ) {
 		if( params.hasOwnProperty( prop )) {
 			if( _settingsMap.hasOwnProperty( prop )) {
@@ -134,11 +134,15 @@ exports.parse = function( params ) {
 							}
 						}
 					}
+				} 
+
 				// update tsc-watcher options with user params
-				} else {
+				else {
 					_settingsMap[prop] = params[prop];
 				}
 			}
 		}
 	}
+
+	console.log( _settingsMap )
 }
