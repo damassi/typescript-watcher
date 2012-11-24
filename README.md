@@ -11,11 +11,21 @@ Installation
 - To specify module-type, pass in `-m <AMD or commonjs>`.  Default is AMD
 
 ```
+Usage: tscwatch [command] [options]
+
+Possible commands are:
+  tscwatch build: Build TypeScript project (short-cut alias: 'b')
+  tscwatch watch: Watch TypeScript project for changes and automatically compile (short-cut alias: 'w')
+
+To get help on individual command, execute 'tscwatch <command> --help' [options]
+
 Options:
-  -p, --path    The base path to your typescript source                     [required]
-  -o, --output  The output path that you want your .ts files to compile to  [required]
-  -b, --build   Compile the source and then exit                            [default: false]
-  -m, --module  The module type (AMD or commonjs).  Default is AMD          [default: "AMD"]
+  -c, --comments    output comments in the compiled source
+  -cat, --concat    compile all source files into a single .js file
+  -m, --moduletype  set the compiled source module type (commonjs or AMD).  Default is commonjs
+  -s, --sourcemap   output sourcemaps alongside compiled source
+  -t, --target      output JavaScript version; options are "ES3" and "ES5".  Default is "ES3"
+  -v, --version     display tscwatch version
 ```
 
 *** Currently a work in progress ***
