@@ -77,41 +77,41 @@ var _commandLineConfig = {
 
 	options: {
 
-		comments: {
+		"comments": {
 			abbr: 'c',
 			help: 'output comments in the compiled source',
 			flag: true
 		},
 
-		concat: {
+		"concat": {
 			abbr: 'cat',
 			help: 'compile all source files into a single .js file',
 			flag: true
 		},
 
-		moduletype: {
+		"moduletype": {
 			abbr: 'm',
 			help: 'set the compiled source module type (commonjs or AMD).  Default is commonjs',
 			flag: true
 		},
 
-		sourcemap: {
+		"sourcemap": {
 			abbr: 's',
 			help: 'output sourcemaps alongside compiled source',
 			flag: true
 		},
 
-		target: {
+		"target": {
 			abbr: 't',
 			help: 'output JavaScript version; options are "ES3" and "ES5".  Default is "ES3"',
 			flag: true
 		},
 
-		version: {
-	      abbr: 'v',
-	      help: 'display tscwatch version',
-	      flag: true,
-	      callback: _returnPackageVersion,
+		"version": {
+	      	abbr: 'v',
+	      	help: 'display tscwatch version',
+	      	flag: true,
+	      	callback: _returnPackageVersion,
 		},
 	}
 }

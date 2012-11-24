@@ -29,8 +29,8 @@ var _fileName = '';
  * @type {Object}
  */
 var nulloutput = {
-    Write: function(value) {},
-    WriteLine: function(value) {},
+    Write: function( value ){},
+    WriteLine: function( value ){},
     Close: function(){}
 };
 

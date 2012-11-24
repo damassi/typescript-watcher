@@ -1,3 +1,16 @@
 {
-	"optionA": "hey you"
+	"watch": true,
+	"rootPath": "root path",
+	"outputPath": "output path",
+	"compilerOptions": {
+		"comments"		: true, 
+		"concat"		: false, 
+		"debug"			: false, 
+		"declaration"	: false, 
+		"minw"			: false, 
+		"moduletype"	: "commonjs", 
+		"sourcemap"		: false, 
+		"style"			: "", 
+		"target"		: "ES3" 
+	}
 }
