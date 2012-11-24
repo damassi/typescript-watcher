@@ -22,62 +22,70 @@ var _compilationSettings = new TypeScript.CompilationSettings();
  */
 var _settingsMap = {
 	"watch": true,
-	"rootPath": "",
-	"outputPath": "",
+	"rootPath": ".",
+	"outputPath": ".",
 	"compilerOptions": {
 
 		// {Boolean}
 		"comments": { 
-			default: true, 
+			defaults: true, 
 			prop: _compilationSettings.emitComments 
 		}, 
 
 		// (str) : {Function}
 		"concat": { 
-			default: false, 
-			method: _compilationSettings.outputOne 
+			defaults: false, 
+			method: '' //_compilationSettings.outputOne 
 		}, 
 
 		// {Boolean}
 		"debug": { 
-			default: false,
+			defaults: false,
 			prop: TypeScript.CompilerDiagnostics.debug 
 		}, 
 
 		// {Boolean}
 		"declaration": { 
-			default: false, 
+			defaults: false, 
 			prop: _compilationSettings.generateDeclarationFiles
 		}, 
 
 		// {Boolean}
 		"minw": { 
-			default: false, 
+			defaults: false, 
 			prop: _compilationSettings.minWhitespace 
 		}, 
 
 		// TypeScript.ModuleGenTarget.Synchronous || Asynchronous
 		"moduletype": { 
-			default: "commonjs", //TypeScript.ModuleGenTarget.Synchronous
-			prop: _compilationSettings.moduleGenTarget 
+			defaults: TypeScript.ModuleGenTarget.Synchronous, 
+			prop: _compilationSettings.moduleGenTarget,
+			options: {
+				'commonjs': TypeScript.ModuleGenTarget.Synchronous,
+				'amd': TypeScript.ModuleGenTarget.Asynchronous
+			}
 		}, 
 
 		// {Boolean}
 		"sourcemap": { 
-			default: false,
+			defaults: false,
 			prop: _compilationSettings.mapSourceFiles 
 		}, 
 
 		// (str) : {Function}
 		"style": { 
-			default: '',
-			method: _compilationSettings.setStyleOptions 
+			defaults: '',
+			method: '' //_compilationSettings.setStyleOptions 
 		}, 
 
 		// TypeScript.CodeGenTarget.ES3 | ES5
 		"target": { 
-			default: 'ES3',
-			prop: _compilationSettings.codeGenTarget 
+			defaults: TypeScript.CodeGenTarget.ES3,
+			prop: _compilationSettings.codeGenTarget,
+			options: {
+				'es3': TypeScript.CodeGenTarget.ES3,
+				'es5': TypeScript.CodeGenTarget.ES5
+			}
 		}
 	}
 }
@@ -94,5 +102,43 @@ var _settingsMap = {
  * @return {CompilationSettings}        
  */
 exports.parse = function( params ) {
-	console.log( config );
+
+	// Loop through tsc-watcher options
+	for( var prop in params ) {
+		if( params.hasOwnProperty( prop )) {
+			if( _settingsMap.hasOwnProperty( prop )) {
+
+				// Loop through TypeScript compiler options
+				if( prop === 'compilerOptions' ) {
+					var userCompilerSettings = params[ prop ];
+					var compilerOptions = _settingsMap[ prop ];
+					for( var option in userCompilerSettings ) {
+						
+						// found options, update value
+						if( userCompilerSettings.hasOwnProperty( option )) {
+							if( compilerOptions.hasOwnProperty( option )) {
+
+								// check if settings provide options and map to full value
+								var val, propOptions;
+								if( compilerOptions[ option ].hasOwnProperty('options')) {
+									val = userCompilerSettings[option].toLowerCase();
+									compilerOptions[ option ].prop = compilerOptions[ option ].options[ val ]
+									//console.log( compilerOptions[ option ].prop )
+								} 
+
+								// pass in value from config
+								else {
+									compilerOptions[ option ].prop = userCompilerSettings[ option ]
+									//console.log( compilerOptions[ option ].prop );
+								}
+							}
+						}
+					}
+				// update tsc-watcher options with user params
+				} else {
+					_settingsMap[prop] = params[prop];
+				}
+			}
+		}
+	}
 }

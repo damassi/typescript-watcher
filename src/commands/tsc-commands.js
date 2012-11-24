@@ -5,9 +5,10 @@
  * @since 11.23.12
  */
 
-var fs			= require( 'fs' );
-var sysPath		= require( 'path' );
-var tscwatch	= require( './../lib/tscwatch');
+var fs				= require( 'fs' );
+var sysPath			= require( 'path' );
+var tscSettings		= require( './../lib/tsc-settings' );
+var tscwatch		= require( './../lib/tscwatch');
 
 
 //--------------------------------------
@@ -21,7 +22,7 @@ var tscwatch	= require( './../lib/tscwatch');
  */
 exports.runConfig = function( options, callback ) {
 	var config = JSON.parse( fs.readFileSync( sysPath.join( __dirname, '..', '..', 'config.json' )));
-	console.log( config );
+	tscSettings.parse( config );
 }
 
 /**
