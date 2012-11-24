@@ -34,32 +34,6 @@ var nulloutput = {
     Close: function(){}
 };
 
-/**
- * Creates a CompilationSettings object for output
- * 
- * @param  {Object} options a hash of options consisting of
- *   - comments 	: {Boolean} emit comments along with compiled code
- *   - concat  		: {Boolean} compile all source files into a single .js file
- *   - moduleType	: {String} a module type; options are 'AMD' and 'commonjs'
- *   - sourcemap 	: {Boolean} output sourcemaps along with compiled files
- *   - target 		: {String} JavaScript version; options are 'ES3' and 'ES5'.  Default is 'ES3'
- *   
- */
-function _configureSettings( options ) {
-	options = options || {};
-
-	( options.moduleType === 'AMD' ) ? 
-		moduleType = TypeScript.ModuleGenTarget.Asynchronous :
-		moduleType = TypeScript.ModuleGenTarget.Synchronous;
-
-	TypeScript.moduleGenTarget = moduleType;
-
-	_settings = new TypeScript.CompilationSettings();
-    _settings.codeGenTarget = TypeScript.CodeGenTarget.ES5;
-    _settings.moduleGenTarget = TypeScript.ModuleGenTarget.ASynchronous;
-    _settings.resolve = false;
-}
-
 
 //--------------------------------------
 //+ PUBLIC INTERFACE
@@ -71,16 +45,12 @@ function _configureSettings( options ) {
  * @param  {String} path the path to the file
  * 
  */
-exports.compile = function( data, path, callback, moduleType ) {
+exports.compile = function( data, path, callback, compilationSettings ) {
+	_settings = compilationSettings;
+	_settings.resolve = false;
+	TypeScript.moduleGenTarget = _settings.moduleGenTarget;
+
 	var compiler, env, error, js, output, resolver, units, _this = this;
-
-	_configureSettings();
-
-	( moduleType === 'AMD' ) ? 
-		moduleType = TypeScript.ModuleGenTarget.Asynchronous :
-		moduleType = TypeScript.ModuleGenTarget.Synchronous;
-
-	TypeScript.moduleGenTarget = moduleType;
 
     try {
       	js = "";

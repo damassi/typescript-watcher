@@ -31,6 +31,18 @@ var Event = {
 var _watcher = null;
 
 /**
+ * Hash of settings for the compiler
+ * @type {Object}
+ */
+var _tscSettings = null;
+
+/**
+ * Compilation settings
+ * @type {TypeScript.CompilationSettings}
+ */
+var _compilationSettings = null;
+
+/**
  * Flag: -p
  * Path to typescript source-files
  * @type {String}
@@ -148,7 +160,7 @@ function compileSource( path, options ) {
 		    	return console.log( err );
 		  	}
 		  	
-		  	compiler.compile( data, path, outputSource, _moduleType );
+		  	compiler.compile( data, path, outputSource, _compilationSettings );
 		});
 	}
 }
@@ -239,26 +251,13 @@ function destroy( options ) {
  * 
  */
 exports.init = function( tscSettings ) {
+	_tscSettings = tscSettings;
+	_compilationSettings = _tscSettings.compilationSettings;
+	_path = _tscSettings.rootPath;	
+	_outputPath = _tscSettings.outputPath;
 
-	console.log( tscSettings )
-
-	// Base path
-	if( typeof tscSettings.rootPath !== 'undefined' ) 
-		_path = tscSettings.rootPath 
-
-	// Output path
-	if( typeof tscSettings.outputPath !== 'undefined' ) 
-		_outputPath = tscSettings.outputPath;
-
-	// Do we just want to build?
-	if( typeof tscSettings.watch !== 'undefined' ) 
-		_watch = tscSettings.watch;
-
-	// Module type
-	if( typeof tscSettings.moduleType !== 'undefined' )
-		_moduleType = tscSettings.compilerOptions.moduleType;
-
-	_watcher = chokidar.watch( _path, { persistent: _watch });
+	// start watcher
+	_watcher = chokidar.watch( _path, { persistent: _tscSettings.watch });
 
 	addEventListeners();
 };

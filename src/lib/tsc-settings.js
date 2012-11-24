@@ -22,14 +22,14 @@ var _compilationSettings = new TypeScript.CompilationSettings();
  */
 var _settingsMap = {
 	"watch": true,
-	"rootPath": ".",
-	"outputPath": ".",
+	"rootPath": "hey u",
+	"outputPath": "ahh",
 	"compilerOptions": {
 
 		// {Boolean}
 		"comments": { 
 			defaults: true, 
-			prop: _compilationSettings.emitComments 
+			setProp: function( val ){ _compilationSettings.emitComments = val; }
 		}, 
 
 		// (str) : {Function}
@@ -41,25 +41,25 @@ var _settingsMap = {
 		// {Boolean}
 		"debug": { 
 			defaults: false,
-			prop: TypeScript.CompilerDiagnostics.debug 
+			setProp: function( val ){ TypeScript.CompilerDiagnostics.debug = val; }
 		}, 
 
 		// {Boolean}
 		"declaration": { 
 			defaults: false, 
-			prop: _compilationSettings.generateDeclarationFiles
+			setProp: function( val ){ _compilationSettings.generateDeclarationFiles = val; }
 		}, 
 
 		// {Boolean}
 		"minw": { 
 			defaults: false, 
-			prop: _compilationSettings.minWhitespace 
+			setProp: function( val ){ _compilationSettings.minWhitespace = val; }
 		}, 
 
 		// TypeScript.ModuleGenTarget.Synchronous || Asynchronous
 		"moduleType": { 
 			defaults: TypeScript.ModuleGenTarget.Synchronous, 
-			prop: _compilationSettings.moduleGenTarget,
+			setProp: function( val ){ _compilationSettings.moduleGenTarget = val; },
 			options: {
 				'commonjs': TypeScript.ModuleGenTarget.Synchronous,
 				'amd': TypeScript.ModuleGenTarget.Asynchronous
@@ -69,23 +69,39 @@ var _settingsMap = {
 		// {Boolean}
 		"sourcemap": { 
 			defaults: false,
-			prop: _compilationSettings.mapSourceFiles 
+			setProp: function( val ){ _compilationSettings.mapSourceFiles = val; }
 		}, 
 
 		// (str) : {Function}
 		"style": { 
 			defaults: '',
-			method: '' //_compilationSettings.setStyleOptions 
+			setProp: '' //function( val ){ _compilationSettings.setStyleOptions = val; } 
 		}, 
 
 		// TypeScript.CodeGenTarget.ES3 | ES5
 		"target": { 
 			defaults: TypeScript.CodeGenTarget.ES3,
-			prop: _compilationSettings.codeGenTarget,
+			setProp: function( val ){ _compilationSettings.codeGenTarget = val; },
 			options: {
 				'es3': TypeScript.CodeGenTarget.ES3,
 				'es5': TypeScript.CodeGenTarget.ES5
 			}
+		}
+	}
+}
+	
+/**
+ * Sets the default TypeScript.CompilationSettings for the TypeScript compiler
+ * 
+ */
+function _setDefaults() {
+	var prop, compilerOptions = _settingsMap.compilerOptions;
+	for( var prop in compilerOptions ) {
+		if( compilerOptions.hasOwnProperty( prop )) {
+			var settings = compilerOptions[ prop ];
+			if( typeof settings.setProp === 'function' ) {
+				settings.setProp( settings.defaults );
+			};
 		}
 	}
 }
@@ -102,6 +118,7 @@ var _settingsMap = {
  * @return {CompilationSettings}        
  */
 exports.parse = function( params ) {
+	_setDefaults();
 
 	// Loop through tsc-watcher options and / or config file
 	for( var prop in params ) {
@@ -116,33 +133,42 @@ exports.parse = function( params ) {
 						
 						// found options, update value
 						if( userCompilerSettings.hasOwnProperty( option )) {
+							//console.log( option, userCompilerSettings[ option ])
 							if( compilerOptions.hasOwnProperty( option )) {
 
 								// check if settings provide options and map to full value
-								var val, propOptions;
+								var val, propOptions, setProp, configVal;
 								if( compilerOptions[ option ].hasOwnProperty('options')) {
 									val = userCompilerSettings[option].toLowerCase();
-									compilerOptions[ option ].prop = compilerOptions[ option ].options[ val ]
-									//console.log( compilerOptions[ option ].prop )
+									configVal = compilerOptions[ option ].options[ val ];
 								} 
 
-								// pass in value from config
+								// or pass in value from config
 								else {
-									compilerOptions[ option ].prop = userCompilerSettings[ option ]
-									//console.log( compilerOptions[ option ].prop );
+									configVal = userCompilerSettings[ option ]
+								}
+
+								// update TypeScript.CompilationSettings with final values
+								if( compilerOptions[ option ].hasOwnProperty( 'setProp' )) {
+									setProp = compilerOptions[ option ].setProp;
+									if( typeof setProp === 'function' ) {
+										setProp( configVal );
+									}
 								}
 							}
 						}
 					}
 				} 
 
-				// update tsc-watcher options with user params
+				// update values unrelated to TypeScript.CompilationSettings
 				else {
 					_settingsMap[prop] = params[prop];
 				}
 			}
 		}
 	}
+
+	_settingsMap.compilationSettings = _compilationSettings;
 
 	return _settingsMap;
 }

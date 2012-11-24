@@ -1,5 +1,5 @@
 {
-	"watch": true,
+	"watch": false,
 	"rootPath": "tests/app",
 	"outputPath": "tests/public",
 	"compilerOptions": {
@@ -8,7 +8,7 @@
 		"debug"			: false, 
 		"declaration"	: false, 
 		"minw"			: false, 
-		"moduleType"	: "commonjs", 
+		"moduleType"	: "AMD", 
 		"sourcemap"		: false, 
 		"style"			: "", 
 		"target"		: "ES3" 
