@@ -16,7 +16,7 @@ Usage
 2. Watch: To continuously watch .ts files for changes and output compiled .js, execute 
 	* `tscwatch watch <rootPath> <outputPath> [options]`
 
-***More options***
+**More options**
 
 ```
 Usage: tscwatch [command] [options]
