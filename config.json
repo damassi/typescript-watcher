@@ -4,13 +4,11 @@
 	"outputPath": "tests/public2",
 	"compilerOptions": {
 		"comments"		: true, 
-		"concat"		: false, 
 		"debug"			: false, 
 		"declaration"	: false, 
 		"minw"			: false, 
 		"moduleType"	: "AMD", 
 		"sourcemap"		: false, 
-		"style"			: "", 
 		"target"		: "ES3" 
 	}
 }

@@ -193,12 +193,10 @@ function getFilePath( path ) {
  */
 function filter( path ) {
 	// filter only typescript files
-	if( path.match(/^.*\.(ts)$/i)) {
+	if( path.match(/^.*\.(ts)$/i))
 		// filter out interfaces and type definitions
-		if( !path.substr(-5) !== '.d.ts') {
+		if( !path.match( /\.d\.ts/ ))
 			return path;
-		}
-	}
 
 	return '';
 }
