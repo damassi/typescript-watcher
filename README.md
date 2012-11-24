@@ -11,9 +11,9 @@ Installation
 Usage
 -----
 
-* To simply build all .ts sources and ouput .js files into a location, execute 
+1. To build all .ts sources and ouput .js files into a location, execute 
 	*`tscwatch build <rootPath> <outputPath> [options]`
-* To continuously watch for changes, execute 
+2. To continuously watch for changes, execute 
 	*`tscwatch watch <rootPath> <outputPath> [options]
 
 ***More options***
