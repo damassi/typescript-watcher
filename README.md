@@ -12,9 +12,9 @@ Usage
 -----
 
 1. To build all .ts sources and ouput .js files into a location, execute 
-	*`tscwatch build <rootPath> <outputPath> [options]`
+	* `tscwatch build <rootPath> <outputPath> [options]`
 2. To continuously watch for changes, execute 
-	*`tscwatch watch <rootPath> <outputPath> [options]
+	* `tscwatch watch <rootPath> <outputPath> [options]
 
 ***More options***
 
