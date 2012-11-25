@@ -22,8 +22,8 @@ var _compilationSettings = new TypeScript.CompilationSettings();
  */
 var _settingsMap = {
 	"watch": true,
-	"rootPath": "hey u",
-	"outputPath": "ahh",
+	"rootPath": "./",
+	"outputPath": "public",
 	"compilerOptions": {
 
 		// {Boolean}
@@ -120,7 +120,7 @@ function _setDefaults() {
  */
 exports.returnBasicCompilerOptions = function( options ) {
 	options = options || {};
-	
+
 	return {
 		comments: options.comments || true,
 		moduleType: options.moduleType || 'commonjs',
@@ -136,6 +136,7 @@ exports.returnBasicCompilerOptions = function( options ) {
  * @return {CompilationSettings}        
  */
 exports.parse = function( params ) {
+
 	_setDefaults();
 
 	// Loop through tsc-watcher options and / or config file

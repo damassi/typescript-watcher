@@ -23,11 +23,29 @@ describe( 'Compilation Settings', function(){
 	});
 
 	it('should update default compiler options', function(){
-		var tscOptions = {
-			watch: false,
-			rootPath: "path/to/root",
-			outputPath: "path/to/output",
-			compilerOptions: tscSettings.returnBasicCompilerOptions()
+		var settings = tscSettings.returnBasicCompilerOptions({
+			comments: true,
+			moduleType: 'AMD',
+			sourcemap: false,
+			target: 'ES5'
+		});
+		
+		settings.should.have.property('comments', true);
+		settings.should.have.property('moduleType', 'AMD');
+		settings.should.have.property('sourcemap', false);
+		settings.should.have.property('target', 'ES5');
+	});
+
+	it('should return compilationSettings object', function(){
+		var settingsMap = tscSettings.parse();
+		settingsMap.should.be.a('object').and.have.property('compilationSettings')
+	});
+
+	it('should return non-null compilationSettings', function(){
+		var settingsMap = tscSettings.parse();
+		var ops = settingsMap.compilerOptions;
+		for( var prop in ops ) {
+			ops[prop].defaults.should.not.equal('undefined');
 		}
 	});
 });
