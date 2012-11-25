@@ -104,6 +104,8 @@ function _setDefaults() {
 			};
 		}
 	}
+
+	return compilerOptions;
 }
 
 
@@ -117,6 +119,8 @@ function _setDefaults() {
  * @return {[type]}         [description]
  */
 exports.returnBasicCompilerOptions = function( options ) {
+	options = options || {};
+	
 	return {
 		comments: options.comments || true,
 		moduleType: options.moduleType || 'commonjs',

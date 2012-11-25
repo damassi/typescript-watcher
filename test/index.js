@@ -6,13 +6,28 @@
  */
 
 var assert = require('assert');
+var should = require('should');
+var tscSettings = require('../src/core/tsc-settings');
 
 describe( 'TypeScript-Watcher', function(){
+	
+});
 
-	it('should say hello!', function(done) {
-		var h = 'hello';
+describe( 'Compilation Settings', function(){
+	it('should return default compiler options', function(){
+		var settings = tscSettings.returnBasicCompilerOptions();
+		settings.should.have.property('comments');
+		settings.should.have.property('moduleType');
+		settings.should.have.property('sourcemap');
+		settings.should.have.property('target');
+	});
 
-		assert.equal('hello', h);
-		done();
-	})
-})
+	it('should update default compiler options', function(){
+		var tscOptions = {
+			watch: false,
+			rootPath: "path/to/root",
+			outputPath: "path/to/output",
+			compilerOptions: tscSettings.returnBasicCompilerOptions()
+		}
+	});
+});

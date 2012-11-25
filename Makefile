@@ -3,6 +3,9 @@ REPORTER = dot
 test:
 	mocha
 
+watch:
+	mocha --watch
+
 debug:
 	mocha debug
 
@@ -12,4 +15,4 @@ server:
 show:
 	open http://localhost:3000
 
-.PHONY: test
+.PHONY: test test-w
