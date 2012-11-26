@@ -138,7 +138,7 @@ function outputSource( err, js, fileName ) {
 			destroy({ msg: 'Error writing file: ' + error });
 		}
 
-		//console.log( 'Compliation complete: ', path );
+		console.log( 'Compliation complete: ', path );
 	});
 }
 

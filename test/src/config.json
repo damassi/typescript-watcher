@@ -1,13 +1,13 @@
 {
 	"watch": false,
-	"rootPath": "tests/app",
-	"outputPath": "tests/public",
+	"rootPath": "test/src/app",
+	"outputPath": "test/public",
 	"compilerOptions": {
 		"comments"		: true, 
 		"debug"			: false, 
 		"declaration"	: false, 
 		"minw"			: false, 
-		"moduleType"	: "commonjs", 
+		"moduleType"	: "amd", 
 		"sourcemap"		: true, 
 		"target"		: "ES3" 
 	}
