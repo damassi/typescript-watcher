@@ -160,11 +160,8 @@ function compileSource( path, options ) {
 			if( err ) {
 		    	return console.log( err );
 		  	}
-
-		  	// needed for source-maps
-		  	var outputPath = utils.getFilePath(path).replace( _path, _outputPath );
 		  	
-		  	compiler.compile( data, path, outputPath, outputSource, _compilationSettings );
+		  	compiler.compile( data, path, outputSource, _compilationSettings );
 		});
 	}
 }

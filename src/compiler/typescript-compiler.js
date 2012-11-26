@@ -11,7 +11,6 @@ var fs			= require("fs");
 var sysPath		= require("path");
 var io			= require("./io");
 var TypeScript	= require('typescript-wrapper');
-var utils 		= require('./../utils/string-utilities');
 
 /**
  * Compilation settings for the typescript compiler
@@ -46,16 +45,16 @@ var nulloutput = {
  * @param  {String} path the path to the file
  * 
  */
-exports.compile = function( data, path, outputPath, callback, compilationSettings ) {
+exports.compile = function( data, path, callback, compilationSettings ) {
 	_settings = compilationSettings;
 	_settings.resolve = false;
 	TypeScript.moduleGenTarget = _settings.moduleGenTarget;
 
-	var error, _this = this;
+	var compiler, env, error, js, output, resolver, units, _this = this;
 
     try {
-      	var js = "";
-        var output = {
+      	js = "";
+        output = {
           	Write: function(value) {
             	return js += value;
           	},
@@ -65,13 +64,14 @@ exports.compile = function( data, path, outputPath, callback, compilationSetting
           	Close: function() {}
         };
 
-		var compiler = new TypeScript.TypeScriptCompiler(null, null, new TypeScript.NullLogger(), _settings);
+		compiler = new TypeScript.TypeScriptCompiler(null, null, new TypeScript.NullLogger(), _settings);
 		compiler.parser.errorRecovery = true;
-
-		var env = new TypeScript.CompilationEnvironment(_settings, io);
-		var resolver = new TypeScript.CodeResolver(env);
-		var units = [{ fileName: sysPath.join(__dirname, "..", "..", "node_modules", "typescript", "bin", "lib.d.ts") }];
-      	var path = TypeScript.switchToForwardSlashes(path);
+		env = new TypeScript.CompilationEnvironment(_settings, io);
+		resolver = new TypeScript.CodeResolver(env);
+		units = [{
+			fileName: sysPath.join(__dirname, "..", "..", "node_modules", "typescript", "bin", "lib.d.ts")
+		}];
+      	path = TypeScript.switchToForwardSlashes(path);
 
       	resolver.resolveCode(path, "", false, {
 	        postResolution: function(file, code) {
@@ -121,16 +121,6 @@ exports.compile = function( data, path, outputPath, callback, compilationSetting
       	return compiler.emit(true, function(fileName) {
         	if (fileName === path.replace(/\.ts$/, ".js")) {
         		_fileName = fileName;
-
-        		var outputFileName = outputPath + utils.getFileName(_fileName)
-        		
-        		if (_settings.mapSourceFiles) {
-        			var emitter = new TypeScript.Emitter( compiler.typeChecker, outputFileName, _settings );
-		            emitter.setSourceMappings(new TypeScript.SourceMapper( path, outputFileName, output, io.createFile(outputFileName + TypeScript.SourceMapper.MapFileExtension)));
-		            //console.log( emitter.allSourceMappers)
-		            //emitter.emitSourceMappings();
-		        }
-          		//console.log(_fileName)
           		return output;
         	} else {
           		return nulloutput;
