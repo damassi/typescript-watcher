@@ -3,8 +3,9 @@
   "name": "typescript-watcher",
   "description": "A file-watcher for TypeScript, providing common functionality currently missing in the tsc command",
   "keywords": [ "typescript", "tsc", "watcher" ],
-  "version": "0.0.3",
   "homepage": "https://github.com/damassi",
+
+  "version": "0.0.4",
   
   "repository": {
     "type": "git",
