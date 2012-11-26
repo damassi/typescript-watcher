@@ -1,3 +1,7 @@
+v. 0.0.4  
+-----------
+- Added sourcemap support
+
 v. 0.0.3  
 -----------
 - Moved command line utils over to Argumentum
