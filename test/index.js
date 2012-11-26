@@ -41,7 +41,7 @@ describe( 'Compilation Settings', function(){
 		settingsMap.should.be.a('object').and.have.property('compilationSettings')
 	});
 
-	it('should return non-null compilationSettings', function(){
+	it('should return non-null compilationSettings defaults', function(){
 		var settingsMap = tscSettings.parse();
 		var ops = settingsMap.compilerOptions;
 		for( var prop in ops ) {

@@ -1,5 +1,5 @@
 /**
- * Creates a TypeScript.CompilationSettings() object and updates config based
+ * Creates a TypeScript.CompilationSettings object and updates config based
  * upon either command-line params or config.json settings
  *
  * @author Christopher Pappas | github.com/damassi
@@ -15,6 +15,17 @@ var TypeScript	= require('typescript-wrapper');
 var _compilationSettings = new TypeScript.CompilationSettings();
 
 /**
+ * A map of basic settings
+ * @type {Object}
+ */
+var _defaultSettingsBasic = {
+	comments: false,
+	moduleType: 'commonjs',
+	sourcemap: false,
+	target: 'ES3'
+}
+
+/**
  * A hash of possible tsc-watcher settings, relevant TypeScript configuration props, and defaults.  
  * For a full list, see: // http://typescript.codeplex.com/SourceControl/changeset/view/d65fcce29d60#src%2fcompiler%2ftsc.ts  
  * 
@@ -28,7 +39,7 @@ var _settingsMap = {
 
 		// {Boolean}
 		"comments": { 
-			defaults: true, 
+			defaults: false, 
 			setProp: function( val ){ _compilationSettings.emitComments = val; }
 		}, 
 
@@ -122,10 +133,10 @@ exports.returnBasicCompilerOptions = function( options ) {
 	options = options || {};
 
 	return {
-		comments: options.comments || true,
-		moduleType: options.moduleType || 'commonjs',
-		sourcemap: options.sourcemap || false,
-		target: options.target || 'ES3'
+		comments: options.comments || _defaultSettingsBasic.comments,
+		moduleType: options.moduleType || _defaultSettingsBasic.moduleType,
+		sourcemap: options.sourcemap || _defaultSettingsBasic.sourcemap,
+		target: options.target || _defaultSettingsBasic.target
 	}
 }
 

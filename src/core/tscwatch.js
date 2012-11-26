@@ -12,6 +12,7 @@ var sys			= require('sys')
 var fs			= require('fs');
 var compiler	= require('./../compiler/typescript-compiler');
 var common		= require('./../lib/brunch/common');
+var utils 		= require('./../utils/string-utilities');
 
 /**
  * Events hash
@@ -80,7 +81,7 @@ var _moduleType = 'AMD'
  * 
  */
 function onAddHandler( path ) {
-	compileSource( filter( path ), { msg: ' has been added' });
+	compileSource( utils.filter( path )) //, { msg: ' has been added' });
 }
 
 /**
@@ -89,7 +90,7 @@ function onAddHandler( path ) {
  * 
  */
 function onChangeHandler( path ) {
-	compileSource( filter( path ), { msg: ' has been changed' });
+	compileSource( utils.filter( path ), { msg: ' has been changed' });
 }
 
 /**
@@ -129,8 +130,8 @@ function outputSource( err, js, fileName ) {
 	if( err )
 		return destroy({ msg: 'Error compiling source: ' + err });
 
-	var path = getFilePath(fileName).replace( _path, _outputPath );
-	var fullPath = path + getFileName( fileName );
+	var path = utils.getFilePath(fileName).replace( _path, _outputPath );
+	var fullPath = path + utils.getFileName( fileName );
 	
 	common.writeFile( fullPath, js, function(error, path, data){
 		if( error !== null ) {
@@ -159,46 +160,13 @@ function compileSource( path, options ) {
 			if( err ) {
 		    	return console.log( err );
 		  	}
+
+		  	// needed for source-maps
+		  	var outputPath = utils.getFilePath(path).replace( _path, _outputPath );
 		  	
-		  	compiler.compile( data, path, outputSource, _compilationSettings );
+		  	compiler.compile( data, path, outputPath, outputSource, _compilationSettings );
 		});
 	}
-}
-
-/**
- * Extracts the file-name from the path
- * @param  {String} path the full path
- * 
- * @return {String}      the file-name
- */
-function getFileName( path ) {
-	return path.match(/[^\/]*$/)[0];
-}
-
-/**
- * Extracts the file-path from the path
- * @param  {String} path the full file-path
- * 
- * @return {String}      the file path
- */
-function getFilePath( path ) {
-	return path.replace(/[^\/]*$/, "");
-}
-
-/**
- * Filters file-system files for only .ts related
- * @param  {String} path the file path
- * 
- * @return {String}      valid typescript file-paths
- */
-function filter( path ) {
-	// filter only typescript files
-	if( path.match(/^.*\.(ts)$/i))
-		// filter out interfaces and type definitions
-		if( !path.match( /\.d\.ts/ ))
-			return path;
-
-	return '';
 }
 
 /**
