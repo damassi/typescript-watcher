@@ -23,6 +23,12 @@ var _settings = null;
  * @type {String}
  */
 var _fileName = '';
+
+/**
+ * Sourcemap fileName
+ * @type {String}
+ */
+var _sourceMapFileName = '';
 	
 /**
  * Wrapper for tsc compiler null output
@@ -50,16 +56,29 @@ exports.compile = function( data, path, callback, compilationSettings ) {
 	_settings.resolve = false;
 	TypeScript.moduleGenTarget = _settings.moduleGenTarget;
 
-	var compiler, env, error, js, output, resolver, units, _this = this;
+	var compiler, env, error, js, output, resolver, sourcemapOutput, sourceMapCode, units, _this = this;
 
     try {
       	js = "";
+      	sourceMapCode = "";
+
+      	// virtual typescript file // io.createFile();
         output = {
           	Write: function(value) {
             	return js += value;
           	},
           	WriteLine: function(value) {
             	return js += value + "\n";
+          	},
+          	Close: function() {}
+        };
+
+        sourcemapOutput = {
+          	Write: function(value) {
+            	return sourceMapCode += value;
+          	},
+          	WriteLine: function(value) {
+            	return sourceMapCode += value + "\n";
           	},
           	Close: function() {}
         };
@@ -119,17 +138,29 @@ exports.compile = function( data, path, callback, compilationSettings ) {
       	compiler.typeCheck();
       	
       	return compiler.emit(true, function(fileName) {
+          
+          if(fileName.substr(-4) === '.map') {
+            _sourceMapFileName = fileName;
+            return sourcemapOutput;
+          }
+
         	if (fileName === path.replace(/\.ts$/, ".js")) {
-        		_fileName = fileName;
-          		return output;
-        	} else {
-          		return nulloutput;
-        	}
+            _fileName = fileName;
+              return output;
+          } else {
+              return nulloutput;
+          }
       	});
 
     } catch (err) {
       	return error = err.stack;
     } finally {
+
+        // create sourcemap files if true
+        if( _settings.mapSourceFiles )
+          callback(error, sourceMapCode, _sourceMapFileName);  
+
+        // output .js files
       	callback(error, js, _fileName);
     }
 }
