@@ -60,7 +60,6 @@ Options:
   -v, --version     display tscwatch version
 ```
 
-*** Currently a work in progress ***
 
 TODO
 ----
