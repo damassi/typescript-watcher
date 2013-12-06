@@ -1,7 +1,7 @@
 TypeScript-Watcher
 ==================
 
-This package is no longer supported.  For similar (and more versatile) support, please see **https://github.com/k-maru/grunt-typescript**: https://github.com/k-maru/grunt-typescript
+This package is no longer supported.  For similar (and more versatile) support, please see **https://github.com/k-maru/grunt-typescript**
 
 -----------
 
