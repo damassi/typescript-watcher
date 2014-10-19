@@ -1,6 +1,6 @@
 /**
  * TypeScript-Watcher commands
- * 
+ *
  * @author Christopher Pappas | github.com/damassi
  * @since 11.23.12
  */
@@ -21,9 +21,9 @@ var tscwatch		= require( './../core/tscwatch');
  * @param  {Function} callback callback function to execute on complete
  */
 exports.runConfig = function( options, callback ) {
-	var config = JSON.parse( fs.readFileSync( options.path ));
-	
-	tscwatch.init( tscSettings.parse( config ));
+  var config = JSON.parse( fs.readFileSync( options.path ));
+
+  tscwatch.init( tscSettings.parse( config ));
 }
 
 /**
@@ -32,14 +32,14 @@ exports.runConfig = function( options, callback ) {
  * @param  {Function} callback callback function to execute on complete
  */
 exports.build = function( options, callback ) {
-	var tscOptions = {
-		watch: false,
-		rootPath: options.rootPath,
-		outputPath: options.outputPath,
-		compilerOptions: tscSettings.returnBasicCompilerOptions( options )
-	}
+  var tscOptions = {
+    watch: false,
+    rootPath: options.rootPath,
+    outputPath: options.outputPath,
+    compilerOptions: tscSettings.returnBasicCompilerOptions( options )
+  }
 
-	tscwatch.init( tscSettings.parse( tscOptions ));
+  tscwatch.init( tscSettings.parse( tscOptions ));
 }
 
 /**
@@ -48,12 +48,12 @@ exports.build = function( options, callback ) {
  * @param  {Function} callback callback function to execute on complete
  */
 exports.watch = function( options, callback ) {
-	var tscOptions = {
-		watch: true,
-		rootPath: options.rootPath,
-		outputPath: options.outputPath,
-		compilerOptions: tscSettings.returnBasicCompilerOptions( options )
-	}
+  var tscOptions = {
+    watch: true,
+    rootPath: options.rootPath,
+    outputPath: options.outputPath,
+    compilerOptions: tscSettings.returnBasicCompilerOptions( options )
+  }
 
-	tscwatch.init( tscSettings.parse( tscOptions ));
+  tscwatch.init( tscSettings.parse( tscOptions ));
 }
