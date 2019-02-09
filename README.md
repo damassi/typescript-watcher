@@ -1,9 +1,8 @@
+This package is wayyy old, don't use it :)   
+
+
 TypeScript-Watcher
 ==================
-
-This package is no longer supported.  For similar (and more versatile) support, please see **https://github.com/k-maru/grunt-typescript**
-
------------
 
 A Node.js file-watcher for TypeScript, providing common functionality currently missing in the tsc command, notably external configuration, the inability to specify output paths for individual files or groups and recursive, multi-file compilations.
 
