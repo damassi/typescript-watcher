@@ -8,7 +8,7 @@ A Node.js file-watcher for TypeScript, providing common functionality currently 
 
 Installation
 -------------
-- Run `sudo npm install -g typescript-watcher`
+- Run `npm install -g typescript-watcher`
 
 
 Usage
